@@ -393,6 +393,189 @@
                 opacity: 0;
             }
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0c0c0c 100%);
+            margin: 5% auto;
+            padding: 0;
+            border: 2px solid #4facfe;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(79, 172, 254, 0.3);
+            animation: slideIn 0.4s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .download-info {
+            text-align: center;
+        }
+
+        .ai-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .download-info h3 {
+            color: #4facfe;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .download-info p {
+            color: #b0b0b0;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 25px 0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-item {
+            color: #e0e0e0;
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+
+        .download-buttons {
+            margin: 30px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+        }
+
+        .download-btn.primary {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .download-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4);
+        }
+
+        .download-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #b0b0b0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .download-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .repo-info {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .repo-info p {
+            color: #888;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .repo-info strong {
+            color: #4facfe;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .download-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -409,7 +592,7 @@
                 para la detección, clasificación y análisis avanzado de exoplanetas. Utilizando más de 130,000 datos 
                 de NASA con precisión del 98.5% en detección y análisis de composición atmosférica.
             </p>
-            <a href="/" class="cta-button">🚀 Probar IA</a>
+            <button onclick="openDownloadModal()" class="cta-button">🚀 Probar IA</button>
             <a href="#architecture" class="cta-button" style="background: rgba(255,255,255,0.1);">📊 Ver Arquitectura</a>
         </section>
 
@@ -582,9 +765,9 @@
             <p style="color: #b0b0b0; margin-bottom: 40px; font-size: 1.2em;">
                 Descubre exoplanetas, analiza su composición y visualiza mundos distantes con nuestra IA avanzada
             </p>
-            <a href="/" class="cta-button" style="font-size: 20px; padding: 25px 50px;">
+            <button onclick="openDownloadModal()" class="cta-button" style="font-size: 20px; padding: 25px 50px;">
                 🚀 Comenzar Exploración
-            </a>
+            </button>
         </section>
     </div>
 
@@ -604,7 +787,78 @@
         </p>
     </footer>
 
+    <!-- Modal de Descarga -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🤖 Descargar Inteligencia Artificial</h2>
+                <span class="close" onclick="closeDownloadModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="download-info">
+                    <div class="ai-icon">🧠</div>
+                    <h3>Sistema INA - Arquitectura Neural Entrelazada</h3>
+                    <p>Descarga el código completo de nuestra IA avanzada para detección y análisis de exoplanetas.</p>
+                    
+                    <div class="features-list">
+                        <div class="feature-item">✅ Código fuente completo</div>
+                        <div class="feature-item">✅ Modelos pre-entrenados</div>
+                        <div class="feature-item">✅ Datasets de NASA</div>
+                        <div class="feature-item">✅ Documentación técnica</div>
+                        <div class="feature-item">✅ API REST incluida</div>
+                    </div>
+                    
+                    <div class="download-buttons">
+                        <button onclick="downloadFromGitHub()" class="download-btn primary">
+                            📥 Descargar desde GitHub
+                        </button>
+                        <button onclick="closeDownloadModal()" class="download-btn secondary">
+                            ❌ Cancelar
+                        </button>
+                    </div>
+                    
+                    <div class="repo-info">
+                        <p>🔗 Repositorio: <strong>CREATIONOFCONFORMEDGAMES/Stellaris-AI</strong></p>
+                        <p>📊 Licencia: MIT License</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Funciones del Modal de Descarga
+        function openDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevenir scroll del fondo
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restaurar scroll
+        }
+
+        function downloadFromGitHub() {
+            // Redirigir al repositorio de GitHub
+            window.open('https://github.com/CREATIONOFCONFORMEDGAMES/Stellaris-AI', '_blank');
+            closeDownloadModal();
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('downloadModal');
+            if (event.target === modal) {
+                closeDownloadModal();
+            }
+        }
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeDownloadModal();
+            }
+        });
+
         // Crear estrellas animadas
         function createStars() {
             const starsContainer = document.getElementById('stars');
